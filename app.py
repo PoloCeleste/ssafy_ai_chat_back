@@ -50,7 +50,12 @@ async def assistant_endpoint(req: MessageRequest):
     #     model="gpt-4o",
     # )
     # 우리는 앞서 만든 assistant를 사용합니다.
-    assistant = await openai.beta.assistants.retrieve("asst_tc4AhtsAjNJnRtpJmy1gjJOE")
+    assistant = await openai.beta.assistants.create(
+        name="test",
+        instructions="User가 여행을 가고자 하는 목적지를 알려주면 너는 해당 목적지에 가볼만한 관광지를 추천해주고 그것을 바탕으로 여행일정을 작성해줘. 만약 user가 자신의 기호나 성향, 취향 등을 알려주면 그것을 바탕으로 여행 일정을 작성해줘.",
+        model="gpt-4o",
+        tools=[{"type": "file_search"}],
+        )
 
     # Create a new thread with the user's message
     thread = await openai.beta.threads.create(
